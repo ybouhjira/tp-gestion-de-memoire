@@ -39,13 +39,12 @@ void lire_valeur(Variable var)
     {                                                                   \
       TYPE val ;                                                        \
       unsigned int i ;                                                  \
-      for(i = 0; i < var.size; i += sizeof(TYPE))        \
+      for(i = 0; i < var.size; i += sizeof(TYPE))                       \
       {                                                                 \
         printf("element %d : ", i);                                     \
-        char c;                                                         \
-        while(c != '\n') c = getchar(); /*Vider le buffer*/             \
+        while(getchar() != '\n'); /*Vider le buffer*/                   \
         scanf(PERCENT, &val);                                           \
-        memcpy(mem.info + var.adrs + i, &val, sizeof(TYPE));  \
+        memcpy(mem.info + var.adrs + i, &val, sizeof(TYPE));            \
       }                                                                 \
       break;                                                            \
     }
@@ -55,7 +54,7 @@ void lire_valeur(Variable var)
     case INT: LIRE_VALEUR_TYPE(int, "%d");
     case FLOAT: LIRE_VALEUR_TYPE(float, "%f");
     case CHAR: LIRE_VALEUR_TYPE(char, "%c");
-    case SHORT: LIRE_VALEUR_TYPE(short, "%d");
+    case SHORT: LIRE_VALEUR_TYPE(short, "%hu");
     case LONG: LIRE_VALEUR_TYPE(long, "%ld");
     case DOUBLE: LIRE_VALEUR_TYPE(double, "%lf");
     }

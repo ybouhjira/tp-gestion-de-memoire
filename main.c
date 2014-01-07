@@ -32,31 +32,36 @@ int main()
             printf("Nom de la variable : ");
             scanf("%s", nom);
 
-            // taille
-            int taille;
-            printf("Taille : ");
-            scanf("%d", &taille);
+            if(recherche_variable(liste, nom))
+              printf("%s existe déja\n");
+            else
+              {
+                // taille
+                int taille;
+                printf("Taille : ");
+                scanf("%d", &taille);
 
-            // type
-            int typeNum = 0;
-            printf("Type : \n"
-                   "0 - INT\n"
-                   "1 - CHAR\n"
-                   "2 - FLOAT\n"
-                   "3 - SHORT\n"
-                   "4 - LONG\n"
-                   "5 - DOUBLE\n");
-            scanf("%d", &typeNum);
+                // type
+                int typeNum = 0;
+                printf("Type : \n"
+                       "0 - INT\n"
+                       "1 - CHAR\n"
+                       "2 - FLOAT\n"
+                       "3 - SHORT\n"
+                       "4 - LONG\n"
+                       "5 - DOUBLE\n");
+                scanf("%d", &typeNum);
 
-            // allocation
-            Variable var = allouer(nom, taille, (Type) typeNum);
+                // allocation
+                Variable var = allouer(nom, taille, (Type) typeNum);
 
-            // valeur
-            printf("Valeurs : \n");
-            lire_valeur(var);
+                // valeur
+                printf("Valeurs : \n");
+                lire_valeur(var);
 
-            // stockage dans la liste
-            liste_ajout(&liste, var);
+                // stockage dans la liste
+                liste_ajout(&liste, var);
+              }
             break;
           }
         case 3: // Affichage d'une variable
@@ -88,7 +93,6 @@ int main()
             liste_supprimer(&liste, nom);
           }
         }
-
     } while( 1 <= choix && choix <= 4);
 
   return 0;
