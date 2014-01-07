@@ -1,15 +1,17 @@
 #ifndef MEMOIRE_H
 #define MEMOIRE_H
 
-#include "variable.h"
-
 /** Memoire**/
 #define TAILLE_MEMOIRE 256
-typedef struct {
+typedef struct
+{
   char info[TAILLE_MEMOIRE];
   int fin;
 } Memoire;
 Memoire mem = {{0}, -1};
+
+
+#include "variable.h"
 
 // FONCTIONS
 /** Nom de la fonction : allouer
@@ -21,13 +23,25 @@ Memoire mem = {{0}, -1};
  *    Alloue de la place pour une variable dans le tableau memoire
  *  et retourne l'adresse de la memoire allouée
  */
-Variable allouer(char *nom, unsigned int taille)
+Variable allouer(char *nom, unsigned int taille, Type type)
 {
+  int size;
+  switch (type)
+    {
+    case INT: size = taille * sizeof(int); break;
+    case CHAR: size = taille * sizeof(char); break;
+    case FLOAT: size = taille * sizeof(float); break;
+    case SHORT: size = taille * sizeof(short); break;
+    case LONG: size = taille * sizeof(long); break;
+    case DOUBLE: size = taille * sizeof(double); break;
+    }
+
   Variable var;
   strcpy(var.nom, nom);
-  var.size = taille;
+  var.size = size;
+  var.type = type;
 
-  if(mem.fin + taille >= TAILLE_MEMOIRE)
+  if(mem.fin + size >= TAILLE_MEMOIRE)
     {
       printf("Memoire insuffisante\n");
       var.adrs = -1;
@@ -35,7 +49,7 @@ Variable allouer(char *nom, unsigned int taille)
   else
     {
       var.adrs =  mem.fin + 1;
-      mem.fin += taille;
+      mem.fin += size;
     }
   return var;
 }
