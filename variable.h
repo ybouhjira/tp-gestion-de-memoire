@@ -19,19 +19,33 @@ typedef struct
 } Variable;
 
 
+char* type_a_chaine(Type type)
+{
+  switch (type)
+    {
+    case INT: return "int";
+    case CHAR: return "char";
+    case FLOAT: return "float";
+    case SHORT: return "short";
+    case LONG: return "long";
+    case DOUBLE: return "double";
+    default: return "";
+    }
+}
+
 void lire_valeur(Variable var)
 {
   #define LIRE_VALEUR_TYPE(TYPE, PERCENT)                               \
     {                                                                   \
-      TYPE val = 0;                                                     \
+      TYPE val ;                                                        \
       unsigned int i ;                                                  \
-      for(i = 0; i < var.size / sizeof(TYPE); ++i)                      \
+      for(i = 0; i < var.size; i += sizeof(TYPE))        \
       {                                                                 \
-        printf("element %d : ", i);                                   \
+        printf("element %d : ", i);                                     \
         char c;                                                         \
         while(c != '\n') c = getchar(); /*Vider le buffer*/             \
         scanf(PERCENT, &val);                                           \
-        memcpy((void*) mem.info + var.adrs + i, &val, sizeof(TYPE));    \
+        memcpy(mem.info + var.adrs + i, &val, sizeof(TYPE));  \
       }                                                                 \
       break;                                                            \
     }
@@ -47,35 +61,21 @@ void lire_valeur(Variable var)
     }
 }
 
-char* type_a_chaine(Type type)
-{
-  switch (type)
-    {
-    case INT: return "int";
-    case CHAR: return "char";
-    case FLOAT: return "float";
-    case SHORT: return "short";
-    case LONG: return "long";
-    case DOUBLE: return "double";
-    default: return "";
-    }
-}
-
 void afficher_val(Variable var)
 {
-  #define AFFICHER_VAL_TYPE(TYPE, PERC)                        \
-    {                                                          \
-      unsigned int i;                                          \
-      for(i = 0; i < var.size / sizeof(TYPE); ++i)             \
-        {                                                      \
-          printf("element %d : ", i);                          \
-          TYPE val;                                            \
-          memcpy(&val, (void*) mem.info + var.adrs + i, sizeof(TYPE)); \
-          printf(PERC, val);                                   \
-          printf("\n");                                        \
-        }                                                      \
-      break;                                                   \
-    }                                                          \
+  #define AFFICHER_VAL_TYPE(TYPE, PERC)                                \
+    {                                                                  \
+      unsigned int i;                                                  \
+      for(i = 0; i < var.size; i += sizeof(TYPE))                     \
+        {                                                              \
+          printf("element %d : ", i);                                  \
+          TYPE val;                                                    \
+          memcpy(&val, mem.info + var.adrs + i, sizeof(TYPE)); \
+          printf(PERC, val);                                           \
+          printf("\n");                                                \
+        }                                                              \
+      break;                                                           \
+    }                                                                  \
 
     switch(var.type)
       {
