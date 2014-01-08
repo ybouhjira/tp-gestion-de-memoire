@@ -33,7 +33,7 @@ int main()
             scanf("%s", nom);
 
             if(recherche_variable(liste, nom))
-              printf("%s existe déja\n");
+              printf("%s existe déja\n", nom);
             else
               {
                 // taille
@@ -89,8 +89,15 @@ int main()
             printf("Entrez le nom de la variable : ");
             scanf("%s", nom);
 
-            supprimer(*(recherche_variable(liste, nom)));
-            liste_supprimer(&liste, nom);
+            Variable *recherche = recherche_variable(liste, nom);
+            if(recherche)
+              {
+                supprimer(*recherche);
+                liste_supprimer(&liste, nom);
+              }
+            else
+              printf("%s n'existe pas\n", nom);
+
           }
         }
     } while( 1 <= choix && choix <= 4);

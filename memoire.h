@@ -63,7 +63,7 @@ Variable allouer(char *nom, unsigned int taille, Type type)
 void supprimer(Variable var)
 {
   int i;
-  for(i = var.adrs; i + var.size < mem.fin; ++i)
+  for(i = var.adrs; i + var.size < (unsigned)mem.fin; ++i)
     mem.info[i] = mem.info[i + var.size];
 
   mem.fin -= var.size;

@@ -162,6 +162,7 @@ void liste_supprimer(Liste **list, char *nom)
 
 Variable* recherche_variable(Liste *list, char *nom)
 {
+  if(!list) return NULL;
   Liste *courant = list;
   while(courant)
     {
@@ -169,7 +170,6 @@ Variable* recherche_variable(Liste *list, char *nom)
         return &courant->var;
       courant = courant->suiv;
     }
-
   return NULL;
 }
 
